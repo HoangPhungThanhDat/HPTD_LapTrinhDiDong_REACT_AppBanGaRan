@@ -1,0 +1,102 @@
+{
+    "data": [
+      {
+        "id": 1,
+        "title": "Combo Tiệc Gà 99K - 4 Miếng Gà +2 Nước",
+        "price": 178000,
+        "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+        "category": "Gà Rán KFC",
+        "image": "https://api.popeyes.vn/api/v1/files/MG24_Phase2rt1_1.jpg",
+        "rating": {
+          "rate": 3.9,
+          "count": 120
+        }
+      },
+      {
+        "id": 2,
+        "title": "2 Gà Tắm Nước Mắm +2 Gà Giòn +2 Nước 115K",
+        "price": 192000,
+        "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+        "category": "Gà Rán KFC",
+        "image": "https://api.popeyes.vn/api/v1/files/115k1.jpg",
+        "rating": {
+          "rate": 3.9,
+          "count": 120
+        }
+      },
+      {
+        "id": 4,
+        "title": "2 Gà Tắm Nước Mắm +2 Gà Giòn +2 Nước 115K",
+        "price": 192000,
+        "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+        "category": "Gà Rán KFC",
+        "image": "https://api.popeyes.vn/api/v1/files/115k1.jpg",
+        "rating": {
+          "rate": 3.9,
+          "count": 120
+        }
+      },
+      {
+        "id": 3,
+        "title": "Combo Gà + Burger Phi Lê Siêu No Chỉ 89K",
+        "price": 108000,
+        "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+        "category": "Hamburger",
+        "image": "https://api.popeyes.vn/api/v1/files/COMBO89KBURGERGIAGACH.jpg",
+        "rating": {
+          "rate": 3.9,
+          "count": 120
+        }
+      },
+      {
+        "id": 5,
+        "title": "Combo Burger Tôm",
+        "price": 56000,
+        "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+        "category": "Hamburger",
+        "image": "https://api.popeyes.vn/api/v1/files/ComboShrimpBurger.webp",
+        "rating": {
+          "rate": 3.9,
+          "count": 120
+        }
+      },
+      {
+        "id": 6,
+        "title": "Combo Gia đình A",
+        "price": 108000,
+        "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+        "category": "Gà Rán KFC",
+        "image": "https://api.popeyes.vn/api/v1/files/ComboFamilyA.jpg",
+        "rating": {
+          "rate": 3.9,
+          "count": 120
+        }
+      },
+      {
+        "id": 7,
+        "title": "Sandwich Sữa (1 Bánh)",
+        "price": 108000,
+        "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+        "category": "Sandwich Sữa",
+        "image": "https://api.popeyes.vn/api/v1/files/PP_BnhSandwichSa.jpg",
+        "rating": {
+          "rate": 3.9,
+          "count": 120
+        }
+      },
+      {
+        "id": 8,
+        "title": "Combo Gà Tắm nước mắm - 2 người",
+        "price": 185000,
+        "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+        "category": "Gà Rán KFC",
+        "image": "https://api.popeyes.vn/api/v1/files/combogtnm2new.png",
+        "rating": {
+          "rate": 3.9,
+          "count": 120
+        }
+      }
+
+    ]
+  }
+  

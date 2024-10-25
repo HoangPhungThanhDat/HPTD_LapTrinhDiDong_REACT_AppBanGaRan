@@ -1,183 +1,3 @@
-// import React, { useState } from 'react';
-// import { View, Text, FlatList, StyleSheet, Button, TouchableOpacity, Image } from 'react-native';
-// import { useNavigation } from '@react-navigation/native';
-
-// interface CartItem {
-//   id: number;
-//   name: string;
-//   price: number;
-//   quantity: number;
-//   image: any;
-// }
-
-// const initialCartItems: CartItem[] = [
-//   {
-//     id: 1,
-//     name: 'Gà Rán KFC',
-//     price: 250000,
-//     quantity: 1,
-//     image: require('../../assets/images/sp1.jpg'),
-//   },
-//   {
-//     id: 2,
-//     name: 'Sandwich Sữa (3 Bánh)',
-//     price: 250000,
-//     quantity: 2,
-//     image: require('../../assets/images/sw.jpg'),
-//   },
-// ];
-
-// const Giohang: React.FC = () => {
-//   const [cartItems, setCartItems] = useState<CartItem[]>(initialCartItems);
-//   const navigation = useNavigation();
-
-//   const handleRemoveItem = (id: number) => {
-//     setCartItems(cartItems.filter(item => item.id !== id));
-//   };
-
-//   const handleQuantityChange = (id: number, delta: number) => {
-//     setCartItems(cartItems.map(item => 
-//       item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item
-//     ));
-//   };
-
-//   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-
-//   const renderItem = ({ item }: { item: CartItem }) => (
-//     <View style={styles.cartItem}>
-//       <Image source={item.image} style={styles.cartImage} />
-//       <View style={styles.cartDetails}>
-//         <Text style={styles.cartName}>{item.name}</Text>
-//         <Text style={styles.cartPrice}>{(item.price * item.quantity).toLocaleString()}đ</Text>
-//         <View style={styles.quantityContainer}>
-//           <TouchableOpacity onPress={() => handleQuantityChange(item.id, -1)}>
-//             <Text style={styles.quantityButton}>-</Text>
-//           </TouchableOpacity>
-//           <Text style={styles.quantityText}>{item.quantity}</Text>
-//           <TouchableOpacity onPress={() => handleQuantityChange(item.id, 1)}>
-//             <Text style={styles.quantityButton}>+</Text>
-//           </TouchableOpacity>
-//         </View>
-//         <TouchableOpacity onPress={() => handleRemoveItem(item.id)}>
-//           <Text style={styles.removeButton}>Xóa</Text>
-//         </TouchableOpacity>
-//       </View>
-//     </View>
-//   );
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.title}>Giỏ Hàng</Text>
-//       <FlatList
-//         data={cartItems}
-//         renderItem={renderItem}
-//         keyExtractor={item => item.id.toString()}
-//         contentContainerStyle={cartItems.length === 0 ? styles.emptyContainer : null}
-//         ListEmptyComponent={<Text style={styles.emptyText}>Giỏ hàng trống!</Text>}
-//       />
-//       {cartItems.length > 0 && (
-//         <View style={styles.totalContainer}>
-//           <Text style={styles.totalText}>Tổng giá: {totalPrice.toLocaleString()}đ</Text>
-//           <Button title="Tiến hành thanh toán" onPress={() => navigation.navigate('Thanhtoan')} />
-//         </View>
-//       )}
-//       <Button title="Quay lại" onPress={() => navigation.navigate('Trangchu')} />
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     padding: 16,
-//     backgroundColor: '#f8f9fa',
-//   },
-//   title: {
-//     fontSize: 28,
-//     fontWeight: 'bold',
-//     marginBottom: 20,
-//     textAlign: 'center',
-//     color: '#343a40',
-//   },
-//   cartItem: {
-//     flexDirection: 'row',
-//     backgroundColor: '#ffffff',
-//     borderRadius: 10,
-//     padding: 15,
-//     marginBottom: 15,
-//     elevation: 2,
-//   },
-//   cartImage: {
-//     width: 80,
-//     height: 80,
-//     borderRadius: 10,
-//   },
-//   cartDetails: {
-//     marginLeft: 15,
-//     flex: 1,
-//   },
-//   cartName: {
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//   },
-//   cartPrice: {
-//     fontSize: 16,
-//     color: '#28a745',
-//     marginBottom: 5,
-//   },
-//   quantityContainer: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     marginVertical: 5,
-//   },
-//   quantityButton: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//     padding: 5,
-//     backgroundColor: '#007bff',
-//     color: '#ffffff',
-//     borderRadius: 5,
-//     marginHorizontal: 5,
-//     textAlign: 'center',
-//     width: 30,
-//   },
-//   quantityText: {
-//     fontSize: 18,
-//     marginHorizontal: 10,
-//   },
-//   removeButton: {
-//     color: '#dc3545',
-//     fontWeight: 'bold',
-//     marginTop: 10,
-//   },
-//   totalContainer: {
-//     marginTop: 20,
-//     padding: 15,
-//     backgroundColor: '#ffffff',
-//     borderRadius: 10,
-//     elevation: 2,
-//   },
-//   totalText: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//     marginBottom: 10,
-//     textAlign: 'center',
-//   },
-//   emptyContainer: {
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   emptyText: {
-//     fontSize: 16,
-//     color: '#6c757d',
-//   },
-// });
-
-// export default Giohang;
-
-
-
-
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, Button, Image, TouchableOpacity } from 'react-native';
 
@@ -196,7 +16,7 @@ interface CartScreenProps {
   onCheckout: () => void;
 }
 
-const Giohang: React.FC<CartScreenProps> = ({ cartItems, onRemoveItem, onCheckout }) => {
+const Giohang: React.FC<CartScreenProps> = ({ cartItems = [], onRemoveItem, onCheckout }) => {
   // Tính tổng giá
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
@@ -205,7 +25,7 @@ const Giohang: React.FC<CartScreenProps> = ({ cartItems, onRemoveItem, onCheckou
       <Image source={item.image} style={styles.cartImage} resizeMode="cover" />
       <View style={styles.cartDetails}>
         <Text style={styles.cartName}>{item.name}</Text>
-        <Text style={styles.cartPrice}>${item.price.toFixed(2)}</Text>
+        <Text style={styles.cartPrice}>{item.price} đ</Text>
         <Text style={styles.cartQuantity}>Số lượng: {item.quantity}</Text>
       </View>
       <TouchableOpacity onPress={() => onRemoveItem(item.id)} style={styles.removeButton}>
@@ -217,18 +37,21 @@ const Giohang: React.FC<CartScreenProps> = ({ cartItems, onRemoveItem, onCheckou
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Giỏ Hàng</Text>
-      <FlatList
-        data={cartItems}
-        renderItem={renderCartItem}
-        keyExtractor={item => item.id.toString()}
-        contentContainerStyle={styles.listContainer}
-      />
+      {cartItems.length === 0 ? (
+        <Text style={styles.emptyText}>Giỏ hàng trống !</Text>
+      ) : (
+        <FlatList
+          data={cartItems}
+          renderItem={renderCartItem}
+          keyExtractor={item => item.id.toString()}
+          contentContainerStyle={styles.listContainer}
+        />
+      )}
       {cartItems.length > 0 && (
         <View style={styles.footer}>
           <Text style={styles.totalText}>Tổng giá: {totalPrice.toLocaleString()}đ</Text>
-          <TouchableOpacity style={styles.checkoutButton} onPress={onCheckout}>
-          <Button  title="Tiến hành thanh toán" onPress={() => navigation.navigate('Thanhtoan')} />
-           
+          <TouchableOpacity onPress={onCheckout}>
+            <Button  title="Tiến hành thanh toán" onPress={() => navigation.navigate('Thanhtoan')} />
           </TouchableOpacity>
         </View>
       )}
@@ -336,6 +159,13 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     paddingBottom: 80, // Để đảm bảo footer không bị che khuất
+  },
+  emptyText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#757575',
+    textAlign: 'center',
+    marginTop: 20,
   },
 });
 

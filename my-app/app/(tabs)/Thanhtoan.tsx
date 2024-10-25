@@ -5,13 +5,19 @@ const PaymentScreen: React.FC = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>('Momo');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [bankAccount, setBankAccount] = useState<string>('');
+  const [recipientName, setRecipientName] = useState<string>(''); // New state for recipient name
+  const [recipientPhone, setRecipientPhone] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
   const [paymentSuccess, setPaymentSuccess] = useState<boolean>(false);
 
   const handlePayment = () => {
     console.log(`Thanh toán bằng: ${selectedPaymentMethod}`);
     console.log(`Số điện thoại: ${phoneNumber}`);
     console.log(`Tài khoản ngân hàng: ${bankAccount}`);
-    
+    console.log(`Tên người nhận: ${recipientName}`); // Log recipient name
+    console.log(`Số điện thoại nhận hàng: ${recipientPhone}`);
+    console.log(`Địa chỉ nhận hàng: ${address}`);
+
     // Hiển thị modal thanh toán thành công
     setPaymentSuccess(true);
   };
@@ -19,11 +25,31 @@ const PaymentScreen: React.FC = () => {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Trang Thanh Toán</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Nhập họ tên người nhận"
+        value={recipientName} // New input for recipient name
+        onChangeText={setRecipientName}
+      />
 
+      <TextInput
+        style={styles.input}
+        placeholder="Nhập số điện thoại nhận hàng"
+        value={recipientPhone}
+        onChangeText={setRecipientPhone}
+        keyboardType="phone-pad"
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Nhập địa chỉ nhận hàng"
+        value={address}
+        onChangeText={setAddress}
+      />
       <View style={styles.paymentMethodContainer}>
         <Text style={styles.subtitle}>Chọn phương thức thanh toán:</Text>
 
-        {/* Phương thức thanh toán Momo */}
+        {/* Payment methods */}
         <TouchableOpacity
           style={[styles.button, selectedPaymentMethod === 'Momo' && styles.selectedButton]}
           onPress={() => setSelectedPaymentMethod('Momo')}
@@ -32,7 +58,6 @@ const PaymentScreen: React.FC = () => {
           <Text style={styles.buttonText}>Momo</Text>
         </TouchableOpacity>
 
-        {/* Phương thức thanh toán ZaloPay */}
         <TouchableOpacity
           style={[styles.button, selectedPaymentMethod === 'ZaloPay' && styles.selectedButton]}
           onPress={() => setSelectedPaymentMethod('ZaloPay')}
@@ -41,13 +66,19 @@ const PaymentScreen: React.FC = () => {
           <Text style={styles.buttonText}>ZaloPay</Text>
         </TouchableOpacity>
 
-        {/* Phương thức thanh toán Ngân Hàng */}
         <TouchableOpacity
           style={[styles.button, selectedPaymentMethod === 'Ngân Hàng' && styles.selectedButton]}
           onPress={() => setSelectedPaymentMethod('Ngân Hàng')}
         >
           <Image source={require('../../assets/images/nganhang.png')} style={styles.paymentImage} />
           <Text style={styles.buttonText}>Ngân Hàng</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, selectedPaymentMethod === 'Thanh Toán Khi Nhận Hàng' && styles.selectedButton]}
+          onPress={() => setSelectedPaymentMethod('Thanh Toán Khi Nhận Hàng')}
+        >
+          <Text style={styles.buttonText}>Thanh Toán Khi Nhận Hàng</Text>
         </TouchableOpacity>
       </View>
 
@@ -70,6 +101,8 @@ const PaymentScreen: React.FC = () => {
         />
       )}
 
+      
+
       <TouchableOpacity style={styles.checkoutButton} onPress={handlePayment}>
         <Text style={styles.checkoutButtonText}>Thanh Toán</Text>
       </TouchableOpacity>
@@ -83,11 +116,8 @@ const PaymentScreen: React.FC = () => {
       >
         <View style={styles.modalBackground}>
           <View style={styles.modalContainer}>
-            <Text style={styles.modalText}>Thanh toán thành công!</Text>
-            <Image
-              source={require('../../assets/images/sp1.jpg')}
-              style={styles.successImage}
-            />
+            <Text style={styles.modalText}>Đặt hàng thành công!</Text>
+            
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => setPaymentSuccess(false)}

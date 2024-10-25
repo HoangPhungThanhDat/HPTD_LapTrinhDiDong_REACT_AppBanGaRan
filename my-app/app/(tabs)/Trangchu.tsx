@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, SafeAreaView, ScrollView, Image, Button, Modal, TouchableOpacity } from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import Giohang from './Giohang';
+
 interface Product {
   id: number;
-  name: string;
+  title: string; // Cập nhật từ name thành title
   price: number;
   category: string;
-  image: any;
+  image: string; // Đổi kiểu từ any thành string
 }
-//-------------BANNER ĐỘNG---------------
+
 const banners = [
   require('../../assets/images/banner4.jpg'),
   require('../../assets/images/banner5.jpg'),
@@ -20,80 +21,84 @@ const banners = [
 
 const MainScreen: React.FC = () => {
   const navigation = useNavigation();
-  const products: Product[] = [
-    { id: 1, name: 'Gà Rán KFC', price: 250000, category: 'Gà Rán KFC', image: require('../../assets/images/sp1.jpg') },
-    { id: 2, name: 'Sandwich Sữa (3 Bánh)', price: 350000, category: 'Sandwich Sữa', image: require('../../assets/images/sw.jpg') },
-    { id: 3, name: 'Gà Rán', price: 250000, category: 'Gà Rán KFC', image: require('../../assets/images/sp2.jpg') },
-    { id: 4, name: 'Gà Rán 03', price: 150000, category: 'Gà Rán KFC', image: require('../../assets/images/sp3.jpg') },
-    { id: 5, name: 'Gà Rán KFC 02', price: 450000, category: 'Pizza', image: require('../../assets/images/sp4.jpg') },
-    { id: 6, name: 'Hamburger 01', price: 350000, category: 'Hamburger', image: require('../../assets/images/sp7.webp') },
-    { id: 7, name: 'Salad Greek', price: 150000, category: 'Salad', image: require('../../assets/images/sp2.jpg') },
-    { id: 8, name: 'Hamburger', price: 250000, category: 'Hamburger', image: require('../../assets/images/sp6.jpg') },
-  ];
-
-  const categories = ['Tất cả', 'Gà Rán KFC', 'Sandwich Sữa', 'Hamburger'];
-
+  const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('Tất cả');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentBannerIndex, setCurrentBannerIndex] = useState<number>(0);
-  const [cart, setCart] = useState<Product[]>([]);
   const [showCart, setShowCart] = useState(false);
   const [quantity, setQuantity] = useState<number>(1);
-  const [cartItems, setCartItems] = useState<any[]>([]); // Danh sách sản phẩm trong giỏ hàng
-  const [selectedSize, setSelectedSize] = useState(null);
+  const [cartItems, setCartItems] = useState<Product[]>([]); 
+
+  // Fetch products
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/data');
+        const json = await response.json();
+        setProducts(json);
+      } catch (error) {
+        console.error('Lỗi khi lấy dữ liệu sản phẩm:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+  
+  const categories = ['Tất cả', 'Gà Rán KFC', 'Sandwich Sữa', 'Hamburger'];
+//   Hàm này được gọi khi người dùng chọn một sản phẩm.
+// Hàm nhận một tham số product là đối tượng sản phẩm được người dùng nhấn vào.
+// setSelectedProduct(product); lưu sản phẩm này vào state selectedProduct, từ đó có thể hiển thị thông tin chi tiết của sản phẩm đó trong modal.
   const handleProductPress = (product: Product) => {
     setSelectedProduct(product);
   };
 
   const handleCloseModal = () => {
     setSelectedProduct(null);
+    setQuantity(1); // Reset quantity when closing modal
   };
 
-  
+  const handleRemoveFromCart = (id: number) => {
+    setCartItems(cartItems.filter(item => item.id !== id));
+  };
 
-const handleRemoveFromCart = (id: number) => {
-  setCartItems(cartItems.filter(item => item.id !== id));
-};
+  const handleCheckout = () => {
+    alert('Bạn đã thanh toán thành công!');
+    setCartItems([]); // Xóa giỏ hàng sau khi thanh toán
+  };
 
-const handleCheckout = () => {
-  alert('Bạn đã thanh toán thành công!');
-  setCartItems([]); // Xóa giỏ hàng sau khi thanh toán
-};
-
-
-
-const handleAddToCart = () => {
-  if (selectedProduct) {
-    const existingItem = cartItems.find(item => item.id === selectedProduct.id);
-    if (existingItem) {
-      // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng
-      setCartItems(cartItems.map(item => 
-        item.id === selectedProduct.id ? { ...item, quantity: item.quantity + quantity } : item
-      ));
-    } else {
-      // Thêm sản phẩm mới vào giỏ hàng
-      setCartItems([...cartItems, { ...selectedProduct, quantity,size: selectedSize  }]);
+  const handleAddToCart = () => {
+    if (selectedProduct) {
+      const existingItem = cartItems.find(item => item.id === selectedProduct.id);
+      if (existingItem) {
+        // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng
+        setCartItems(cartItems.map(item => 
+          item.id === selectedProduct.id ? { ...item, quantity: item.quantity + quantity } : item
+        ));
+      } else {
+        // Thêm sản phẩm mới vào giỏ hàng
+        setCartItems([...cartItems, { ...selectedProduct, quantity }]); // Bỏ size nếu không sử dụng
+      }
+      alert(`Bạn đã thêm ${quantity} ${selectedProduct.title} vào giỏ hàng thành công!`);
+      handleCloseModal();
     }
-    alert(`Bạn đã thêm ${quantity} ${selectedProduct.name} vào giỏ hàng thành công!`);
-    handleCloseModal();
-  }
-};
+  };
 
-const handleBuyNow = () => {
-  if (selectedProduct) {
-    alert(`Bạn đã mua ${quantity} ${selectedProduct.name}  thành công!`);
-    handleCloseModal();
-  }
-};
-//---------------------------TÌM KIẾM--------------------------------------------------
+  const handleBuyNow = () => {
+    if (selectedProduct) {
+      alert(`Bạn đã mua ${quantity} ${selectedProduct.title} thành công!`);
+      handleCloseModal();
+    }
+  };
+
+  // Tìm kiếm sản phẩm
   const filteredProducts = products.filter(product => {
     const matchesCategory = selectedCategory === 'Tất cả' || product.category === selectedCategory;
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = product.title.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
-  //=============================================NEX BANNER=====================================================
+  // Chuyển banner
   const handleNextBanner = () => {
     setCurrentBannerIndex((prevIndex) => (prevIndex + 1) % banners.length);
   };
@@ -109,8 +114,8 @@ const handleBuyNow = () => {
 
     return () => clearInterval(bannerInterval);
   }, []);
-  //=================================================================================================================
-  // Get related products based on the selected product's category
+
+  // Sản phẩm liên quan
   const getRelatedProducts = (selectedProduct: Product) => {
     return products.filter(product => 
       product.category === selectedProduct.category && product.id !== selectedProduct.id
@@ -128,17 +133,17 @@ const handleBuyNow = () => {
           />
         </TouchableOpacity>
         <View style={styles.navButtons}>
-          {['KHUYẾN MÃI', 'THỰC ĐƠN', 'CỬA HÀNG', 'THEO DÕI ĐƠN HÀNG', 'ĐẶT TIỆC', 'VIE ▼', 'Rewards', '👤',].map((item, index) => (
+          {['KHUYẾN MÃI', 'THỰC ĐƠN', 'CỬA HÀNG', 'THEO DÕI ĐƠN HÀNG', 'ĐẶT TIỆC', 'VIE ▼', 'Rewards', '👤'].map((item, index) => (
             <TouchableOpacity key={index} onPress={() => console.log(item)}>
               <Text style={styles.navItem}>{item}</Text>
             </TouchableOpacity>
-            
           ))}
           <TouchableOpacity onPress={() => setShowCart(true)}>
-            <Icon name="shopping-cart" size={20} color=" #000000"  />
+            <Icon name="shopping-cart" size={20} color="#000000" />
           </TouchableOpacity>
         </View>
       </View>
+
       <ScrollView contentContainerStyle={styles.innerContainer}>
         <View style={styles.searchContainer}>
           <TextInput
@@ -147,12 +152,9 @@ const handleBuyNow = () => {
             value={searchQuery}
             onChangeText={setSearchQuery}
           /> 
-          
           <MaterialIcons name="search" size={24} color="#999" />
-          
         </View>
-        
-
+{/* BANNER ĐỘNG */}
         <View style={styles.bannerContainer}>
           <TouchableOpacity onPress={handlePrevBanner} style={styles.arrowLeft}>
             <AntDesign name="left" size={24} color="black" />
@@ -170,6 +172,7 @@ const handleBuyNow = () => {
         <Text style={styles.welcomeText}>Chào Mừng Đến Với GÀ RÁN POPEYES!</Text>
         <Text style={styles.instructionText}>Bạn có thể Order các sản phẩm tại đây.</Text>
 
+{/* DANH MỤC */}
         <View style={styles.categoryContainer}>
           {categories.map(category => (
             <Button 
@@ -180,7 +183,7 @@ const handleBuyNow = () => {
             />
           ))}
         </View>
-
+{/* SẢN PHẨM */}
         <View style={styles.productList}>
           {filteredProducts.map(product => (
             <TouchableOpacity
@@ -188,9 +191,9 @@ const handleBuyNow = () => {
               style={styles.productItem}
               onPress={() => handleProductPress(product)}
             >
-              <Image source={product.image} style={styles.productImage} resizeMode="cover" />
+              <Image source={{ uri: product.image }} style={styles.productImage} resizeMode="cover" />
               <View style={styles.productDetails}>
-                <Text style={styles.productName}>{product.name}</Text>
+                <Text style={styles.productName}>{product.title}</Text>
                 <Text style={styles.productPrice}>{product.price.toLocaleString()}đ</Text>
               </View>
               <MaterialIcons name="shopping-cart" size={24} color="black" />
@@ -209,11 +212,10 @@ const handleBuyNow = () => {
               <View style={styles.modalContent}>   
               <Text style={styles.modalTitle}>CHI TIẾT SẢN PHẨM:</Text>            
                   <Image source={selectedProduct.image} style={styles.modalImage} resizeMode="contain" />
-                  <View style={styles.modalTextContainer}>                   
-                    <Text style={styles.modalTitle}>{selectedProduct.name}</Text>
+                  <View style={styles.modalTextContainer}>                                      
                     <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Lương về - Combo sale hè</Text>
+                    <Text style={styles.modalTitle}>{selectedProduct.title}</Text>
                     <Text style={{ textDecorationLine: 'line-through' }}>163.000 ₫</Text>
-                    <Text>1 gà giòn + 1 mì Ý + 1 Donut tôm + 1 Popcorn + 2 nước ngọt</Text>
                     <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'red' }}>
                       Giá: {selectedProduct.price.toLocaleString()}đ
                     </Text>
@@ -272,10 +274,6 @@ const handleBuyNow = () => {
             </View>
           </Modal>
         )}
- 
-
-
-
 
       </ScrollView>
     </SafeAreaView>
@@ -513,5 +511,3 @@ const styles = StyleSheet.create({
 });
 
 export default MainScreen;
-
-
