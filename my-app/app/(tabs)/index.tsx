@@ -4,12 +4,14 @@ import LoginScreen from './Dangnhap';
 import RegisterScreen from './Dangky'; 
 import Trangchu from './Trangchu'; 
 import Giohang from './Giohang'; 
+import Thanhtoan from './Thanhtoan'; 
 
 export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   Trangchu: undefined;
   Giohang: undefined;
+  Thanhtoan: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -21,6 +23,8 @@ const AppNavigator: React.FC = () => {
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="Trangchu" component={Trangchu} />
       <Stack.Screen name="Giohang" component={Giohang} />
+
+      
     </Stack.Navigator>
   );
 };

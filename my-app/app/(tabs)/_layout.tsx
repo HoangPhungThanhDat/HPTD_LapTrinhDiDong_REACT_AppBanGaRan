@@ -1,12 +1,35 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
+import React, { useRef, useEffect } from 'react';
+import { Animated } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const bounceValue = useRef(new Animated.Value(1)).current; // Khởi tạo giá trị Animated
+
+  // Hàm tạo hiệu ứng quét lên và quét xuống
+  const startBouncing = () => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(bounceValue, {
+          toValue: 1.2, // Tăng kích thước lên 20%
+          duration: 500, // Thời gian tăng
+          useNativeDriver: true, // Sử dụng driver gốc để mượt mà hơn
+        }),
+        Animated.timing(bounceValue, {
+          toValue: 1, // Trả về kích thước ban đầu
+          duration: 500, // Thời gian giảm
+          useNativeDriver: true, // Sử dụng driver gốc để mượt mà hơn
+        }),
+      ])
+    ).start(); // Bắt đầu hiệu ứng
+  };
+
+  useEffect(() => {
+    startBouncing(); // Bắt đầu hiệu ứng khi component được mount
+  }, []);
 
   return (
     <Tabs
@@ -14,66 +37,100 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
       }}>
-      {/* <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
-        }}
-      /> */}
       <Tabs.Screen
         name="Trangchu"
         options={{
-          title: 'Trangchu',
+          title: 'Trang chủ',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <MaterialCommunityIcons
+              name={focused ? 'home-circle' : 'home-circle-outline'}
+              color={color}
+              size={24}
+            />
           ),
         }}
       />
       <Tabs.Screen
         name="Dangky"
         options={{
-          title: 'Dangky',
+          title: 'Đăng ký',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'person-outline'} color={color} />
+            <MaterialCommunityIcons
+              name={focused ? 'account-plus' : 'account-plus-outline'}
+              color={color}
+              size={24}
+            />
           ),
         }}
       />
-       <Tabs.Screen
+
+      <Tabs.Screen
         name="Giohang"
         options={{
-          title: 'Giohang',
+          title: 'Giỏ hàng',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'cart-outline'} color={color} />
+            <MaterialCommunityIcons
+              name={focused ? 'cart-variant' : 'cart-outline'}
+              color={color}
+              size={24}
+            />
           ),
         }}
       />
-       <Tabs.Screen
-        name="Dangnhap"
+
+      {/* Tab Quét Mã QR ở giữa với hiệu ứng quét */}
+      <Tabs.Screen
+        name="QuetQR"
         options={{
-          title: 'Dangnhap',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'log-in-outline'} color={color} />
+          title: 'Quét QR',
+          tabBarIcon: ({ color }) => (
+            <Animated.View style={{ transform: [{ scale: bounceValue }] }}>
+              <MaterialCommunityIcons
+                name="qrcode-scan"
+                color={Colors[colorScheme ?? 'light'].primary}
+                size={32}
+              />
+            </Animated.View>
           ),
+          tabBarLabel: () => null,
         }}
       />
-       <Tabs.Screen
-        name="Thanhtoan"
+      <Tabs.Screen
+        name="Thanhtoan" // Đảm bảo file Thanhtoan.js tồn tại
         options={{
-          title: 'Thanhtoan',
+          title: 'Thanh toán',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'cash-outline'} color={color} />
+            <MaterialCommunityIcons
+              name={focused ? 'credit-card' : 'credit-card-outline'} // Icon phù hợp cho thanh toán
+              color={color}
+              size={24}
+            />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="Dangnhap"
         options={{
-          title: 'Explore',
+          title: 'Đăng nhập',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+            <MaterialCommunityIcons
+              name={focused ? 'login' : 'login-variant'}
+              color={color}
+              size={24}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: 'Điều hướng',
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons
+              name={focused ? 'compass' : 'compass-outline'}
+              color={color}
+              size={24}
+            />
           ),
         }}
       />
