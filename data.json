@@ -135,23 +135,23 @@
       "totalPrice": 108000
     },
     {
-      "id": "bb64",
-      "customerName": "datne",
+      "id": "028a",
+      "customerName": "thành đạt nè",
       "address": "hcm",
-      "phoneNumber": "09878676",
+      "phoneNumber": "0878676545",
       "paymentMethod": "ZaloPay",
       "items": [
         {
-          "id": "8",
-          "title": "Combo Gà Tắm nước mắm - 2 người",
-          "price": 185000,
+          "id": "1",
+          "title": "Combo Tiệc Gà 99K - 4 Miếng Gà +2 Nước",
+          "price": 178000,
           "category": "Gà Rán KFC",
-          "image": "https://api.popeyes.vn/api/v1/files/combogtnm2new.png",
+          "image": "https://api.popeyes.vn/api/v1/files/MG24_Phase2rt1_1.jpg",
           "rating": {
             "rate": 3.9,
             "count": 120
           },
-          "quantity": 3
+          "quantity": 4
         },
         {
           "id": "2",
@@ -166,38 +166,9 @@
           "quantity": 3
         }
       ],
-      "totalPrice": 1131000
-    },
-    {
-      "id": "32b0",
-      "username": "dat890",
-      "password": "123456",
-      "phone": "45344343"
-    },
-    {
-      "id": "b5e4",
-      "customerName": "hoàng phùng thành đạt",
-      "address": "hcm",
-      "phoneNumber": "03232121",
-      "paymentMethod": "ZaloPay",
-      "items": [
-        {
-          "id": "7",
-          "title": "Sandwich Sữa (1 Bánh)",
-          "price": 108000,
-          "category": "Sandwich Sữa",
-          "image": "https://api.popeyes.vn/api/v1/files/PP_BnhSandwichSa.jpg",
-          "rating": {
-            "rate": 3.9,
-            "count": 120
-          },
-          "quantity": 1
-        }
-      ],
-      "totalPrice": 108000
+      "totalPrice": 1288000
     }
   ],
-  
   "user": [
     {
       "id": "32b0",
